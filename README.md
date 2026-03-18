@@ -1,50 +1,19 @@
-# Welcome to your Expo app 👋
+Project Reflection: The Digital Gallery
+For this project, I integrated The Metropolitan Museum of Art Collection API. It’s a massive, open-access RESTful service that provides data on over 470,000 objects. Unlike many modern APIs that require complex OAuth handshakes, The Met’s API is beautifully public, though it requires a bit of "data mining" to get exactly what you need.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+The Problem It Solves
+Museums can be overwhelming. When you’re standing in a gallery or browsing a massive website, it’s easy to lose the "story" of a piece behind walls of text or confusing navigation. This app aims to solve the accessibility and focus problem. It takes the sprawling data of the world’s largest art museum and distills it into a minimalist, "catalog-first" mobile experience. It’s designed for the user who wants to appreciate a high-resolution image first, then dive into the academic provenance (medium, period, and dimensions) without being buried in a cluttered UI. It turns a massive database into a private, pocket-sized exhibition.
 
-## Get started
+The Most Difficult Part of Integration
+The most challenging aspect wasn't actually the "fetch"—it was the data consistency and parsing. Because The Met’s collection spans thousands of years, the data is inherently "messy." Some objects have high-res primary images; others only have small thumbnails or no images at all.
 
-1. Install dependencies
+Handling the itemData transfer between the gallery list and the detail screen was a specific pain point. I had to ensure that if a user clicked a piece with missing metadata, the app wouldn't crash. I spent a significant amount of time writing "guard clauses" and safety checks—like the logic to switch between primaryImage and primaryImageSmall—to ensure the UI stayed elegant even when the API returned incomplete information. Dealing with the "Unexpected token" errors during JSON parsing taught me a lot about how expo-router handles stringified objects versus actual objects.
 
-   ```bash
-   npm install
-   ```
+What I Would Improve with More Time
+If I had another week, I’d focus on interactive immersion.
 
-2. Start the app
+Shared Element Transitions: I’d love to make the transition from the list to the detail screen "seamless," where the image physically grows into the cover photo rather than just a standard screen slide.
 
-   ```bash
-   npx expo start
-   ```
+Pinch-to-Zoom: While the fullscreen modal works, adding a true pinch-to-zoom gesture (using Reanimated and Gesture Handler) would let users inspect the brushstrokes of a painting, which is vital for an art app.
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Offline Caching: Currently, the app relies entirely on a live connection. Implementing a caching layer (like react-native-fast-image) would allow users to revisit their "Favorite" pieces even when they’re in a basement gallery with no signal.
